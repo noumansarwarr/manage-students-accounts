@@ -21,7 +21,7 @@ function addStudentToFileJSON(string $fileName, int $registrationNumber, string 
             'classroom' => $classroom,
         ];
 
-        if(!file_put_contents($fileName, json_encode($students))){
+        if (!file_put_contents($fileName, json_encode($students))) {
             echo "Cannot write to the file!";
         }
     }
@@ -42,4 +42,20 @@ function readFromFileJSON(string $fileName): array
         krsort($students);
     }
     return $students;
+}
+
+/**
+ * Update the student data in JSON file
+ *
+ * @param string $fileName
+ * @param array $students
+ * @return void
+ */
+function updateStudentFileJSON(string $fileName, array $students): void
+{
+    if (is_writable($fileName)) {
+        if (!file_put_contents($fileName, json_encode($students))) {
+            echo "Cannot write to the file!";
+        }
+    }
 }

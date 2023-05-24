@@ -17,6 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             addStudent($fileName, $registrationNumber, $name, $grade, $classroom);
         }
+    } elseif (isset($_POST['updateStudent'])) {
+        $registrationNumber = $_POST['registrationNumber'];
+        $name = $_POST['name'];
+        $grade = $_POST['grade'];
+        $classroom = $_POST['classroom'];
+
+        // Validate grade
+        if (!is_numeric($grade) || $grade < 0 || $grade > 10) {
+            displayErrorMessage("Invalid grade. Grade should be a number between 0 and 10.");
+        } else {
+            updateStudent($fileName, $registrationNumber, $name, $grade, $classroom);
+        }
     }
 }
 

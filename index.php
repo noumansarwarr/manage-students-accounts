@@ -36,7 +36,7 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
         <h3>Add Student</h3>
         <div class="form-group row">
             <label for="registrationNumber" class="col-sm-2 col-form-label">Registration Number:<sup
-                class="text-danger">*</sup></label>
+                    class="text-danger">*</sup></label>
 
             <div class="col-sm-10">
                 <input type="number" id="registrationNumber" name="registrationNumber"
@@ -53,7 +53,7 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
         </div>
         <div class="form-group row">
             <label for="grade" class="col-sm-2 col-form-label">Grade:<sup
-                class="text-danger">*</sup></label>
+                    class="text-danger">*</sup></label>
 
             <div class="col-sm-10">
                 <input type="number" id="grade" name="grade" min="0" max="10" class="form-control"
@@ -62,7 +62,7 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
         </div>
         <div class="form-group row">
             <label for="classroom" class="col-sm-2 col-form-label">Classroom:<sup
-                class="text-danger">*</sup></label>
+                    class="text-danger">*</sup></label>
             <div class="col-sm-10">
                 <select id="classroom" name="classroom" class="custom-select" required>
                     <option value="" selected hidden disabled>Select an Option</option>
@@ -80,6 +80,7 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
     <?php if (empty($paginatedStudents)) : ?>
         <p>No students found.</p>
     <?php else : ?>
+        <!--Table start-->
         <table class="table">
             <thead>
             <tr>
@@ -87,6 +88,7 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
                 <th>Name</th>
                 <th>Grade</th>
                 <th>Classroom</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -96,10 +98,90 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
                     <td><?php echo $student['name']; ?></td>
                     <td><?php echo $student['grade']; ?></td>
                     <td><?php echo $student['classroom']; ?></td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModal<?php echo $student['registrationNumber']; ?>">Update
+                        </button>
+
+                        <!--Modal start-->
+                        <div class="modal fade" id="exampleModal<?php echo $student['registrationNumber']; ?>"
+                             data-backdrop="static" data-keyboard="false"
+                             tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <form autocomplete="off" method="post" action="index.php">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="registrationNumber"
+                                                   value="<?php echo $student['registrationNumber']; ?>">
+
+                                            <div class="form-group row">
+                                                <label for="name" class="col-sm-2 col-form-label">Name:<sup
+                                                        class="text-danger">*</sup></label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="text" id="name" name="name"
+                                                           value="<?php echo $student['name']; ?>" class="form-control"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="grade" class="col-sm-2 col-form-label">Grade:<sup
+                                                        class="text-danger">*</sup></label>
+
+                                                <div class="col-sm-10">
+                                                    <input type="number" id="grade" name="grade"
+                                                           value="<?php echo $student['grade']; ?>" min="0" max="10"
+                                                           class="form-control"
+                                                           required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="classroom" class="col-sm-2 col-form-label">Classroom:<sup
+                                                        class="text-danger">*</sup></label>
+                                                <div class="col-sm-10">
+                                                    <select id="classroom" name="classroom" class="custom-select"
+                                                            required>
+                                                        <option value="" selected hidden disabled>Select an Option
+                                                        </option>
+                                                        <option
+                                                            value="Fundamental of Programming" <?php echo $student['classroom'] == 'Fundamental of Programming' ? 'selected' : ''; ?> >
+                                                            Fundamental of Programming
+                                                        </option>
+                                                        <option
+                                                            value="Object Oriented Programming" <?php echo $student['classroom'] == 'Object Oriented Programming' ? 'selected' : ''; ?> >
+                                                            Object Oriented Programming
+                                                        </option>
+                                                        <option
+                                                            value="Data Structures and Algorithms" <?php echo $student['classroom'] == 'Data Structures and Algorithms' ? 'selected' : ''; ?> >
+                                                            Data Structures and Algorithms
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <button type="submit" name="updateStudent" class="btn btn-primary">Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--Modal end-->
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
+        <!--Table end-->
 
         <nav aria-label="Student pagination" class="float-right">
             <ul class="pagination">
