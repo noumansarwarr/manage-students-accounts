@@ -8,6 +8,13 @@
 
 require_once "back-end/app.php";
 
+$itemsPerPage = 5;
+$totalItems = count($students);
+$totalPages = ceil($totalItems / $itemsPerPage);
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+$startIndex = ($currentPage - 1) * $itemsPerPage;
+$paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
+
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +77,7 @@ require_once "back-end/app.php";
     </form>
 
     <h3 class="mt-4">Students List</h3>
-    <?php if (empty($students)) : ?>
+    <?php if (empty($paginatedStudents)) : ?>
         <p>No students found.</p>
     <?php else : ?>
         <table class="table">
@@ -83,7 +90,7 @@ require_once "back-end/app.php";
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($students as $student) : ?>
+            <?php foreach ($paginatedStudents as $student) : ?>
                 <tr>
                     <td><?php echo $student['registrationNumber']; ?></td>
                     <td><?php echo $student['name']; ?></td>
@@ -93,6 +100,16 @@ require_once "back-end/app.php";
             <?php endforeach; ?>
             </tbody>
         </table>
+
+        <nav aria-label="Student pagination" class="float-right">
+            <ul class="pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                    <li class="page-item <?php echo $i == $currentPage ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </nav>
     <?php endif; ?>
 </div>
 
