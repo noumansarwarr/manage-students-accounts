@@ -26,3 +26,19 @@ function addStudentToFileJSON(string $fileName, int $registrationNumber, string 
         }
     }
 }
+
+/**
+ * Reads the content from JSON file and returns as an array
+ * @param string $fileName
+ * @return array - returns array of tasks
+ */
+function readFromFileJSON(string $fileName): array
+{
+    $students = [];
+
+    if (file_exists($fileName) && filesize($fileName) > 0) {
+        $json = file_get_contents($fileName);
+        $students = json_decode($json, true);
+    }
+    return $students;
+}

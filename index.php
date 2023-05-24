@@ -68,6 +68,32 @@ require_once "back-end/app.php";
         </div>
         <button type="submit" name="addStudent" class="btn btn-primary float-right">Add Student</button>
     </form>
+
+    <h3 class="mt-4">Students List</h3>
+    <?php if (empty($students)) : ?>
+        <p>No students found.</p>
+    <?php else : ?>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Registration Number</th>
+                <th>Name</th>
+                <th>Grade</th>
+                <th>Classroom</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($students as $student) : ?>
+                <tr>
+                    <td><?php echo $student['registrationNumber']; ?></td>
+                    <td><?php echo $student['name']; ?></td>
+                    <td><?php echo $student['grade']; ?></td>
+                    <td><?php echo $student['classroom']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
