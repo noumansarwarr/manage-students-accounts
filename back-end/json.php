@@ -39,6 +39,7 @@ function readFromFileJSON(string $fileName): array
     if (file_exists($fileName) && filesize($fileName) > 0) {
         $json = file_get_contents($fileName);
         $students = json_decode($json, true);
+        krsort($students);
     }
     return $students;
 }
