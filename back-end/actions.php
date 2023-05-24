@@ -34,6 +34,21 @@ function isRegistrationNumberExists($fileName, $registrationNumber): bool
     return false;
 }
 
+// Function to display success messages
+/**
+ * @param $message
+ * @return void
+ */
+function displaySuccessMessage($message): void
+{
+    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+              $message
+              <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+              </button>
+            </div>";
+}
+
 /**
  * Add student action. To add a new student
  *
@@ -51,4 +66,5 @@ function addStudent($fileName, $registrationNumber, $name, $grade, $classroom): 
         return;
     }
     addStudentToFileJSON($fileName, $registrationNumber, $name, $grade, $classroom);
+    displaySuccessMessage("Added Successfully!");
 }

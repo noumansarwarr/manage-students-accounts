@@ -1,5 +1,7 @@
 <?php
 
+global $fileName;
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Process the submitted form
@@ -17,3 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+// Read students data from json file to list the students
+$students = readFromFileJSON($fileName);

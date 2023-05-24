@@ -8,6 +8,13 @@
 
 require_once "back-end/app.php";
 
+$itemsPerPage = 5;
+$totalItems = count($students);
+$totalPages = ceil($totalItems / $itemsPerPage);
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+$startIndex = ($currentPage - 1) * $itemsPerPage;
+$paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
+
 ?>
 
 <!DOCTYPE html>
@@ -68,6 +75,42 @@ require_once "back-end/app.php";
         </div>
         <button type="submit" name="addStudent" class="btn btn-primary float-right">Add Student</button>
     </form>
+
+    <h3 class="mt-4">Students List</h3>
+    <?php if (empty($paginatedStudents)) : ?>
+        <p>No students found.</p>
+    <?php else : ?>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Registration Number</th>
+                <th>Name</th>
+                <th>Grade</th>
+                <th>Classroom</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($paginatedStudents as $student) : ?>
+                <tr>
+                    <td><?php echo $student['registrationNumber']; ?></td>
+                    <td><?php echo $student['name']; ?></td>
+                    <td><?php echo $student['grade']; ?></td>
+                    <td><?php echo $student['classroom']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <nav aria-label="Student pagination" class="float-right">
+            <ul class="pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                    <li class="page-item <?php echo $i == $currentPage ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </nav>
+    <?php endif; ?>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
