@@ -68,3 +68,28 @@ function addStudent($fileName, $registrationNumber, $name, $grade, $classroom): 
     addStudentToFileJSON($fileName, $registrationNumber, $name, $grade, $classroom);
     displaySuccessMessage("Added Successfully!");
 }
+
+/**
+ * updateStudent action. To update the student data based on their registration number
+ *
+ * @param $registrationNumber
+ * @param $name
+ * @param $grade
+ * @param $classroom
+ * @return void
+ */
+function updateStudent($fileName, $registrationNumber, $name, $grade, $classroom): void
+{
+    //read all students data from JSON file
+    $students = readFromFileJSON($fileName);
+    foreach ($students as &$student) {
+        //update requested student data
+        if ($student['registrationNumber'] === (int)$registrationNumber) {
+            $student['name'] = $name;
+            $student['grade'] = $grade;
+            $student['classroom'] = $classroom;
+        }
+    }
+    updateStudentFileJSON($fileName, $students);
+    displaySuccessMessage("Updated Successfully!");
+}
