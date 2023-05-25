@@ -100,18 +100,18 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
                     <td><?php echo $student['classroom']; ?></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModal<?php echo $student['registrationNumber']; ?>">Update
+                                data-target="#updateStudentModal<?php echo $student['registrationNumber']; ?>">Update
                         </button>
 
-                        <!--Modal start-->
-                        <div class="modal fade" id="exampleModal<?php echo $student['registrationNumber']; ?>"
+                        <!--Update Student Data Modal start-->
+                        <div class="modal fade" id="updateStudentModal<?php echo $student['registrationNumber']; ?>"
                              data-backdrop="static" data-keyboard="false"
-                             tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                             tabindex="-1" aria-labelledby="updateStudentModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <form autocomplete="off" method="post" action="index.php">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
+                                            <h5 class="modal-title" id="updateStudentModalLabel">Update Student</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -175,7 +175,44 @@ $paginatedStudents = array_slice($students, $startIndex, $itemsPerPage);
                                 </form>
                             </div>
                         </div>
-                        <!--Modal end-->
+                        <!--Update Student Data Modal end-->
+
+                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#exampleModal<?php echo $student['registrationNumber']; ?>">Delete
+                        </button>
+
+                        <!--Delete Student Confirmation  Modal start-->
+                        <div class="modal fade" id="exampleModal<?php echo $student['registrationNumber']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="modal-heading">Are You Sure ?</h4>
+                                        <p>Do you really want to <b>delete</b> the student? This process
+                                            cannot be undo.
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="index.php">
+                                            <input type="hidden" name="registrationNumber"
+                                                   value="<?php echo $student['registrationNumber']; ?>">
+                                            <button type="reset" class="btn btn-secondary"
+                                                    data-dismiss="modal">No
+                                            </button>
+                                            <button type="submit" name="deleteStudent"
+                                                    class="btn btn-danger">Yes
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Delete Student Confirmation  Modal end-->
                     </td>
                 </tr>
             <?php endforeach; ?>

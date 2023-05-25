@@ -29,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             updateStudent($fileName, $registrationNumber, $name, $grade, $classroom);
         }
+    } elseif (isset($_POST['deleteStudent'])) {
+        $registrationNumber = $_POST['registrationNumber'];
+        deleteStudent($fileName, $registrationNumber);
     }
 }
 
