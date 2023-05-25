@@ -88,8 +88,11 @@ function updateStudent($fileName, $registrationNumber, $name, $grade, $classroom
             $student['name'] = $name;
             $student['grade'] = $grade;
             $student['classroom'] = $classroom;
+
+            updateStudentFileJSON($fileName, $students);
+            displaySuccessMessage("Updated Successfully!");
+            return;
         }
     }
-    updateStudentFileJSON($fileName, $students);
-    displaySuccessMessage("Updated Successfully!");
+    displayErrorMessage("Student not found.");
 }
