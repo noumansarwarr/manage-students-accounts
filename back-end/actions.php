@@ -96,3 +96,27 @@ function updateStudent($fileName, $registrationNumber, $name, $grade, $classroom
     }
     displayErrorMessage("Student not found.");
 }
+
+/**
+ * deleteStudent action. To delete the student data based on their registration number
+ *
+ * @param $fileName
+ * @param $registrationNumber
+ * @return void
+ */
+function deleteStudent($fileName, $registrationNumber): void
+{
+    //read all students data from JSON file
+    $students = readFromFileJSON($fileName);
+    foreach ($students as $key => $student) {
+        //delete requested student
+        if ($student['registrationNumber'] === (int)$registrationNumber) {
+            unset($students[$key]);
+
+            updateStudentFileJSON($fileName, $students);
+            displaySuccessMessage("Deleted Successfully!");
+            return;
+        }
+    }
+    displayErrorMessage("Student not found.");
+}
